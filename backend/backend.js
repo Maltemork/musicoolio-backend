@@ -32,10 +32,10 @@ app.get("/artists", async (request, response) => {
   });
 });
 app.delete("/artists/:id", async (request, response) => {
-  const reqUserId = request.params.id; //artistId?
+  const reqArtistId = request.params.id; //artistId?
   connection.query(
     "DELETE FROM artists WHERE artistId = ?",
-    [reqUserId],
+    [reqArtistId],
     errorResult(err, results, response)
   );
 });
@@ -47,10 +47,10 @@ app.get("/albums", async (request, response) => {
   });
 });
 app.delete("/albums/:id", async (request, response) => {
-  const reqUserId = request.params.id; //albumId?
+  const reqArtistId = request.params.id; //albumId?
   connection.query(
     "DELETE FROM albums WHERE albumId = ?",
-    [reqUserId],
+    [reqArtistId],
     errorResult(err, results, response)
   );
 });
@@ -62,10 +62,10 @@ app.get("/tracks", async (request, response) => {
   });
 });
 app.delete("/tracks/:id", async (request, response) => {
-  const reqUserId = request.params.id; //trackId?
+  const reqArtistId = request.params.id; //trackId?
   connection.query(
     "DELETE FROM tracks WHERE trackId = ?",
-    [reqUserId],
+    [reqArtistId],
     errorResult(err, results, response)
   );
 });
