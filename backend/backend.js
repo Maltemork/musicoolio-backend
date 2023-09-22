@@ -31,18 +31,41 @@ app.get("/artists", async (request, response) => {
     errorResult(err, result, response);
   });
 });
+app.delete("/artists/:id", async (request, response) => {
+  const reqUserId = request.params.id; //artistId?
+  connection.query(
+    "DELETE FROM artists WHERE artistId = ?",
+    [reqUserId],
+    errorResult(err, results, response)
+  );
+});
 /* ---------- Routes for Albums ---------- */
-app.get("/artists", async (request, response) => {
+app.get("/albums", async (request, response) => {
   connection.query("SELECT * FROM albums ORDER BY name;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
 });
-
+app.delete("/albums/:id", async (request, response) => {
+  const reqUserId = request.params.id; //albumId?
+  connection.query(
+    "DELETE FROM albums WHERE albumId = ?",
+    [reqUserId],
+    errorResult(err, results, response)
+  );
+});
 /* ---------- Routes for Tracks ---------- */
-app.get("/artists", async (request, response) => {
+app.get("/tracks", async (request, response) => {
   connection.query("SELECT * FROM tracks ORDER BY title;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
+});
+app.delete("/tracks/:id", async (request, response) => {
+  const reqUserId = request.params.id; //trackId?
+  connection.query(
+    "DELETE FROM tracks WHERE trackId = ?",
+    [reqUserId],
+    errorResult(err, results, response)
+  );
 });
