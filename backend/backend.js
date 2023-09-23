@@ -23,6 +23,7 @@ function errorResult(err, result, response) {
     response.json(result);
   }
 }
+
 /* ---------- Routes for Artists ---------- */
 
 // Get request for artists (all, ordered by name)
