@@ -15,7 +15,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.listen(process.env.PORT || 3306);
+app.listen(process.env.PORT);
+
+console.log("Hej! Det kører");
 
 app.get('/', (req, res)=>res.json({message: "It works!"}));
 
@@ -49,8 +51,8 @@ app.delete("/artists/:id", async (request, response) => {
 app.post("/artists", async (request, response) => {
   const reqBody = request.body;
   connection.query(
-    "INSERT INTO artists(name, birthdate) VALUES(?, ?)",
-    [reqBody.name, reqBody.birthdate],
+    "INSERT INTO artists(name, birthdate, activeSince, label, website, genres, shortDescription, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+    [reqBody.name, reqBody.birthdate, reqBody.activeSince, reqBody.label, reqBody.website, reqBody.genres, reqBody.shortDescription, reqBody.image],
     (err, result) => {
       // print error or respond with result.
       errorResult(err, result, response);
