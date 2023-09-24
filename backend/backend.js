@@ -28,7 +28,8 @@ function errorResult(err, result, response) {
 
 // Get request for artists (all, ordered by name)
 app.get("/artists", async (request, response) => {
-  connection.query("SELECT * FROM artists ORDER BY name;", (err, result) => {
+  connection.query(
+    "SELECT * FROM artists ORDER BY name;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
@@ -68,7 +69,8 @@ app.put("/artists/:id", async (request, response) => {
 /* ---------- Routes for Albums ---------- */
 
 app.get("/albums", async (request, response) => {
-  connection.query("SELECT * FROM albums ORDER BY name;", (err, result) => {
+  connection.query( 
+  "SELECT * FROM albums ORDER BY name;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
