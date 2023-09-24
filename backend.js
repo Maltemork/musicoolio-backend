@@ -42,12 +42,15 @@ app.get("/artists", async (request, response) => {
 });
 
 app.delete("/artists/:id", async (request, response) => {
-  const reqArtistId = Number(request.params.id); //.artistId?
-  connection.query(
-    "DELETE FROM artists WHERE artistId = ?",
-    [reqArtistId],
-    errorResult(err, results, response)
-  );
+  const id = request.params.id;
+  const query = "DELETE FROM artists WHERE artistId=?;";
+  const values = [id];
+
+  connection.query(query, values, (error, results) => {
+    errorResult(error, results, response);
+  }
+  )
+  
 });
 
 app.post("/artists", async (request, response) => {
