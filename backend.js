@@ -17,6 +17,8 @@ app.use(cors());
 
 app.listen(process.env.PORT || 3306);
 
+app.get('/', (req, res)=>res.json({message: "It works!"}));
+
 // Default function for printing error or returning results.
 function errorResult(err, result, response) {
   if (err) {
