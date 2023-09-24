@@ -40,14 +40,16 @@ app.get("/artists", async (request, response) => {
     errorResult(err, result, response);
   });
 });
+
 app.delete("/artists/:id", async (request, response) => {
-  const reqArtistId = request.params.id; //.artistId?
+  const reqArtistId = Number(request.params.id); //.artistId?
   connection.query(
     "DELETE FROM artists WHERE artistId = ?",
     [reqArtistId],
     errorResult(err, results, response)
   );
 });
+
 app.post("/artists", async (request, response) => {
   const reqBody = request.body;
   connection.query(
