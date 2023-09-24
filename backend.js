@@ -15,6 +15,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.listen(process.env.PORT || 3306);
+
 // Default function for printing error or returning results.
 function errorResult(err, result, response) {
   if (err) {
