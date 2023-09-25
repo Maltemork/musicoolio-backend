@@ -176,7 +176,7 @@ app.put("/tracks/:id", async (request, response) => {
 /* ---------- Search ---------- */
 
 app.get("/:table/search/name/:searchValue", async (request, response) => {
-  const searchValue = "%" + request.params.searchValue + "%";
+  const searchValue = "'%" + request.params.searchValue + "%'";
   const table = request.params.table;
   searchName(table, searchValue, response);
 });
