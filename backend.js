@@ -132,10 +132,6 @@ app.put("/albums/:id", async (request, response) => {
     }
   );
 });
-app.get("/albums/search/name/:searchValue", async (request, response) => {
-  const searchValue = "%" + request.params.searchValue + "%";
-  searchName("artists", searchValue, response);
-});
 
 /* ---------- Routes for Tracks ---------- */
 
@@ -175,10 +171,6 @@ app.put("/tracks/:id", async (request, response) => {
       errorResult(err, result, response);
     }
   );
-});
-app.get("/tracks/search/name/:searchValue", async (request, response) => {
-  const searchValue = "%" + request.params.searchValue + "%";
-  searchName("artists", searchValue, response);
 });
 
 /* ---------- Search ---------- */
