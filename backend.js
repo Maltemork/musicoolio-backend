@@ -93,16 +93,8 @@ app.get("/artists/random", async (request, response) => {
   );
 });
 app.get("/artists/search/name/:searchValue", async (request, response) => {
-  const reqNameValue = "%" + request.params.searchValue + "%";
-  connection.query(
-    "SELECT * FROM artists WHERE name LIKE ?",
-    [reqNameValue],
-    (err, result) => {
-      // print error or respond with result.
-      errorResult(err, result, response);
-    }
-  );
-  console.log("searching for name with: " + reqNameValue);
+  const searchValue = "%" + request.params.searchValue + "%";
+  searchName("artists", searchValue, response);
 });
 
 /* ---------- Routes for Albums ---------- */
@@ -144,6 +136,10 @@ app.put("/albums/:id", async (request, response) => {
     }
   );
 });
+app.get("/albums/search/name/:searchValue", async (request, response) => {
+  const searchValue = "%" + request.params.searchValue + "%";
+  searchName("artists", searchValue, response);
+});
 
 /* ---------- Routes for Tracks ---------- */
 
@@ -184,3 +180,20 @@ app.put("/tracks/:id", async (request, response) => {
     }
   );
 });
+app.get("/tracks/search/name/:searchValue", async (request, response) => {
+  const searchValue = "%" + request.params.searchValue + "%";
+  searchName("artists", searchValue, response);
+});
+
+/* ---------- Search ---------- */
+
+function searchName(table, searchValue, response) {
+  connection.query(
+    "SELECT * FROM ? WHERE name LIKE ?",
+    [table, searchValue],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
+}
