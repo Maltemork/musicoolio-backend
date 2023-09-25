@@ -102,6 +102,7 @@ app.get("/artist/:searchName", async (request, response) => {
       errorResult(err, result, response);
     }
   );
+  console.log("searching for name with: " + reqNameValue);
 });
 
 /* ---------- Routes for Albums ---------- */
