@@ -80,7 +80,11 @@ app.put("/artists/:id", async (request, response) => {
 app.get("/artists/random", async (request, response) => {
   connection.query(
     "SELECT * FROM artists ORDER BY RAND() LIMIT 1", (err, result) => {
-    errorResult(err, result, response);
+      if (err) {
+        console.log(err);
+      } else {
+        response.json(result[0]);
+      }
     }
   )
 })
