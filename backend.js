@@ -92,11 +92,6 @@ app.get("/artists/random", async (request, response) => {
     }
   );
 });
-app.get("/:table/search/name/:searchValue", async (request, response) => {
-  const searchValue = "%" + request.params.searchValue + "%";
-  const table = request.params.table;
-  searchName(table, searchValue, response);
-});
 
 /* ---------- Routes for Albums ---------- */
 
@@ -187,6 +182,12 @@ app.get("/tracks/search/name/:searchValue", async (request, response) => {
 });
 
 /* ---------- Search ---------- */
+
+app.get("/:table/search/name/:searchValue", async (request, response) => {
+  const searchValue = "%" + request.params.searchValue + "%";
+  const table = request.params.table;
+  searchName(table, searchValue, response);
+});
 
 function searchName(table, searchValue, response) {
   connection.query(
