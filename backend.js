@@ -77,6 +77,14 @@ app.put("/artists/:id", async (request, response) => {
   );
 });
 
+app.get("/artists/random", async (request, response) => {
+  connection.query(
+    "SELECT * FROM artists ORDER BY RAND() LIMIT 1", (err, result) => {
+    errorResult(err, result, response);
+    }
+  )
+})
+
 /* ---------- Routes for Albums ---------- */
 
 app.get("/albums", async (request, response) => {
