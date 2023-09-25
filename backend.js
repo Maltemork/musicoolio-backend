@@ -92,7 +92,7 @@ app.get("/artists/random", async (request, response) => {
     }
   );
 });
-app.get("/artist/:searchName", async (request, response) => {
+app.get("/artists/:searchName", async (request, response) => {
   const reqNameValue = request.params.searchName;
   connection.query(
     "SELECT * FROM artists WHERE name LIKE '%?%'",
