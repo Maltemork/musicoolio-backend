@@ -92,9 +92,10 @@ app.get("/artists/random", async (request, response) => {
     }
   );
 });
-app.get("/artists/search/name/:searchValue", async (request, response) => {
+app.get("/:table/search/name/:searchValue", async (request, response) => {
   const searchValue = "%" + request.params.searchValue + "%";
-  searchName("artists", searchValue, response);
+  const table = request.params.table;
+  searchName(table, searchValue, response);
 });
 
 /* ---------- Routes for Albums ---------- */
