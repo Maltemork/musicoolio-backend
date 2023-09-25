@@ -19,7 +19,7 @@ app.listen(process.env.PORT);
 
 console.log("Hej! Det kører");
 
-app.get('/', (req, res)=>res.json({message: "It works!"}));
+app.get("/", (req, res) => res.json({ message: "It works!" }));
 
 // Default function for printing error or returning results.
 function errorResult(err, result, response) {
@@ -34,13 +34,11 @@ function errorResult(err, result, response) {
 
 // Get request for artists (all, ordered by name)
 app.get("/artists", async (request, response) => {
-  connection.query(
-    "SELECT * FROM artists ORDER BY name;", (err, result) => {
+  connection.query("SELECT * FROM artists ORDER BY name;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
 });
-
 app.delete("/artists/:id", async (request, response) => {
   const id = request.params.id;
   const query = "DELETE FROM artists WHERE artistId=?;";
@@ -48,16 +46,22 @@ app.delete("/artists/:id", async (request, response) => {
 
   connection.query(query, values, (error, results) => {
     errorResult(error, results, response);
-  }
-  )
-  
+  });
 });
-
 app.post("/artists", async (request, response) => {
   const reqBody = request.body;
   connection.query(
     "INSERT INTO artists(name, birthdate, activeSince, label, website, genres, shortDescription, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-    [reqBody.name, reqBody.birthdate, reqBody.activeSince, reqBody.label, reqBody.website, reqBody.genres, reqBody.shortDescription, reqBody.image],
+    [
+      reqBody.name,
+      reqBody.birthdate,
+      reqBody.activeSince,
+      reqBody.label,
+      reqBody.website,
+      reqBody.genres,
+      reqBody.shortDescription,
+      reqBody.image,
+    ],
     (err, result) => {
       // print error or respond with result.
       errorResult(err, result, response);
@@ -76,24 +80,34 @@ app.put("/artists/:id", async (request, response) => {
     }
   );
 });
-
 app.get("/artists/random", async (request, response) => {
   connection.query(
-    "SELECT * FROM artists ORDER BY RAND() LIMIT 1", (err, result) => {
+    "SELECT * FROM artists ORDER BY RAND() LIMIT 1",
+    (err, result) => {
       if (err) {
         console.log(err);
       } else {
         response.json(result[0]);
       }
     }
-  )
-})
+  );
+});
+app.get("/artist/:searchName", async (request, response) => {
+  const reqNameValue = request.params.searchName;
+  connection.query(
+    "SELECT * FROM artists WHERE name LIKE '%?%'",
+    [reqNameValue],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
+});
 
 /* ---------- Routes for Albums ---------- */
 
 app.get("/albums", async (request, response) => {
-  connection.query( 
-  "SELECT * FROM albums ORDER BY name;", (err, result) => {
+  connection.query("SELECT * FROM albums ORDER BY name;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
