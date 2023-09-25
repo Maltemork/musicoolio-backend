@@ -6,7 +6,7 @@
 //
 
 // Import Express, FS and CORS.
-import express from "express";
+import express, { query } from "express";
 import cors from "cors";
 import connection from "./database.js";
 
@@ -176,18 +176,15 @@ app.put("/tracks/:id", async (request, response) => {
 /* ---------- Search ---------- */
 
 app.get("/:table/search/name/:searchValue", async (request, response) => {
-  const searchValue = "'%" + request.params.searchValue + "%'";
+  const searchValue = "%" + request.params.searchValue + "%";
   const table = request.params.table;
   searchName(table, searchValue, response);
 });
 
 function searchName(table, searchValue, response) {
-  connection.query(
-    "SELECT * FROM ? WHERE name LIKE ?",
-    [table, searchValue],
-    (err, result) => {
-      // print error or respond with result.
-      errorResult(err, result, response);
-    }
-  );
+  const query = `SELECT * FROM ${table} WHERE name LIKE ?`;
+  connection.query(query, [searchValue], (err, result) => {
+    // print error or respond with result.
+    errorResult(err, result, response);
+  });
 }
