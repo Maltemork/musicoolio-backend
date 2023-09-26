@@ -175,16 +175,13 @@ app.put("/tracks/:id", async (request, response) => {
 
 /* ---------- Search ---------- */
 
-app.get("/:table/search/name/:searchValue", async (request, response) => {
-  const searchValue = "%" + request.params.searchValue + "%";
+app.get("/:table/search/:column/:searchValue", async (request, response) => {
   const table = request.params.table;
-  searchName(table, searchValue, response);
-});
-
-function searchName(table, searchValue, response) {
-  const query = `SELECT * FROM ${table} WHERE name LIKE ?`;
+  const column = request.params.column;
+  const searchValue = "%" + request.params.searchValue + "%";
+  const query = `SELECT * FROM ${table} WHERE ${column} LIKE ?`;
   connection.query(query, [searchValue], (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
-}
+});
