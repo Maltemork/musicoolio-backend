@@ -180,6 +180,7 @@ app.get("/:table/search/:column/:searchValue", async (request, response) => {
   const column = request.params.column;
   const searchValue = `%${request.params.searchValue}%`;
   const query = `SELECT * FROM ${table} WHERE ${column} LIKE ?`;
+
   connection.query(query, [searchValue], (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
