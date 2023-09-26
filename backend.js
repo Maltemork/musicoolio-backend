@@ -178,7 +178,7 @@ app.put("/tracks/:id", async (request, response) => {
 app.get("/:table/search/:column/:searchValue", async (request, response) => {
   const table = request.params.table;
   const column = request.params.column;
-  const searchValue = "%" + request.params.searchValue + "%";
+  const searchValue = `%${request.params.searchValue}%`;
   const query = `SELECT * FROM ${table} WHERE ${column} LIKE ?`;
   connection.query(query, [searchValue], (err, result) => {
     // print error or respond with result.
