@@ -51,12 +51,12 @@ app.delete("/artists/:id", async (request, response) => {
 app.post("/artists", async (request, response) => {
   const reqBody = request.body;
   connection.query(
-    "INSERT INTO artists(name, birthdate, activeSince, label, website, genres, shortDescription, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO artists(name, birthdate, activeSince, labels, website, genres, shortDescription, image) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
     [
       reqBody.name,
       reqBody.birthdate,
       reqBody.activeSince,
-      reqBody.label,
+      reqBody.labels,
       reqBody.website,
       reqBody.genres,
       reqBody.shortDescription,
