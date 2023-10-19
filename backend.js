@@ -96,7 +96,7 @@ app.get("/artists/random", async (request, response) => {
 /* ---------- Routes for Albums ---------- */
 
 app.get("/albums", async (request, response) => {
-  connection.query("SELECT * FROM albums ORDER BY name;", (err, result) => {
+  connection.query("SELECT * FROM albums ORDER BY title;", (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
   });
