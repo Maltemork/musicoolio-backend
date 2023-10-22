@@ -170,17 +170,14 @@ app.put("/albums/:id", async (request, response) => {
     }
   );
 });
-app.post("/albums/:albumId/addTrack/:trackId", async (request, response) => {
-  const albumId = request.params.albumId;
-  const trackId = request.params.trackId;
-  connection.query(
-    "INSERT INTO albums_tracks (albumId, trackId) VALUES (?, ?)",
-    [albumId, trackId],
-    (err, result) => {
-      // print error or respond with result.
-      errorResult(err, result, response);
-    }
-  );
+app.get("/albums/export/:id", async (request, response) => {
+  const albumId = request.params.id;
+  const query =
+    "SELECT albums.title AS albumTitle, albums.releaseDate AS albumTitle, albums.artistName AS albumArtistName, tracks.title AS trackTitle, tracks.artistName AS trackArtistName FROM albums INNER JOIN albums_tracks ON albums.albumId = albums_tracks.albumId INNER JOIN tracks ON albums_tracks.trackId = tracks.trackId WHERE albums.albumId = ?;";
+  connection.query(query, [albumId], (err, result) => {
+    // print error or respond with result.
+    errorResult(err, result, response);
+  });
 });
 
 /* ---------- Routes for Tracks ---------- */
