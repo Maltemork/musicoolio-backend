@@ -173,7 +173,7 @@ app.put("/albums/:id", async (request, response) => {
 app.get("/albums/export/:id", async (request, response) => {
   const albumId = request.params.id;
   const query =
-    "SELECT albums.title AS albumTitle, albums.releaseDate AS albumTitle, albums.artistName AS albumArtistName, tracks.title AS trackTitle, tracks.artistName AS trackArtistName FROM albums INNER JOIN albums_tracks ON albums.albumId = albums_tracks.albumId INNER JOIN tracks ON albums_tracks.trackId = tracks.trackId WHERE albums.albumId = ?;";
+    "SELECT albums.title AS albumTitle, albums.releaseDate AS releaseDate, albums.albumArt AS albumArt, albums.artistName AS albumArtistName, tracks.title AS trackTitle, tracks.duration AS duration, tracks.trackNo AS trackNo, tracks.artistName AS trackArtistName, tracks.albumName AS trackAlbumName FROM albums INNER JOIN albums_tracks ON albums.albumId = albums_tracks.albumId INNER JOIN tracks ON albums_tracks.trackId = tracks.trackId WHERE albums.albumId = ?;";
   connection.query(query, [albumId], (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
