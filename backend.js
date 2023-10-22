@@ -122,12 +122,46 @@ app.delete("/albums/:id", async (request, response) => {
 });
 app.post("/albums", async (request, response) => {
   const reqBody = request.body;
+  const artistName = reqBody.artistName;
   connection.query(
-    "INSERT INTO albums(title, duration, releaseDate) VALUES(?, ?, ?)",
-    [reqBody.title, reqBody.duration, reqBody.releaseDate],
+    "INSERT INTO albums(title, releaseDate, type, albumArt, artistName) VALUES(?, ?, ?, ?, ?)",
+    [
+      reqBody.title,
+      reqBody.releaseDate,
+      reqBody.type,
+      reqBody.albumArt,
+      reqBody.artistName,
+    ],
     (err, result) => {
       // print error or respond with result.
-      errorResult(err, result, response);
+      if (err) {
+        errorResult(err, result, response);
+      } else {
+        const albumId = result.insertId;
+
+        connection.query(
+          "SELECT artistId FROM artists WHERE name = ?",
+          [reqBody.artistName],
+          (err, artistResult) => {
+            if (err) {
+              errorResult(err, result, response);
+            } else if (artistResult.length === 0) {
+              console.log(artistResult);
+              console.log("Could not find Artist");
+            } else {
+              const artistId = artistResult[0].artistId;
+
+              connection.query(
+                "INSERT INTO artists_albums(artistId, albumId) VALUES(?, ?)",
+                [artistId, albumId],
+                (err, result) => {
+                  errorResult(err, result, response);
+                }
+              );
+            }
+          }
+        );
+      }
     }
   );
 });
