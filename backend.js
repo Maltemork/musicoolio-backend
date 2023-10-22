@@ -202,14 +202,8 @@ app.delete("/tracks/:id", async (request, response) => {
 app.post("/tracks", async (request, response) => {
   const reqBody = request.body;
   connection.query(
-    "INSERT INTO tracks(title, releaseDate, duration, trackNo, artistName) VALUES(?, ?, ?, ?, ?)",
-    [
-      reqBody.title,
-      reqBody.releaseDate,
-      reqBody.duration,
-      reqBody.trackNo,
-      reqBody.artistName,
-    ],
+    "INSERT INTO tracks(title, duration, trackNo, artistName) VALUES(?, ?, ?, ?)",
+    [reqBody.title, reqBody.duration, reqBody.trackNo, reqBody.artistName],
     (err, result) => {
       // print error or respond with result.
       errorResult(err, result, response);
