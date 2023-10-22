@@ -154,6 +154,7 @@ app.post("/albums/:albumId/addTrack/:trackId", async (request, response) => {
       errorResult(err, result, response);
     }
   );
+});
 
 /* ---------- Routes for Tracks ---------- */
 
