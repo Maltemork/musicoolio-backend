@@ -202,11 +202,44 @@ app.delete("/tracks/:id", async (request, response) => {
 app.post("/tracks", async (request, response) => {
   const reqBody = request.body;
   connection.query(
-    "INSERT INTO tracks(title, duration, trackNo, artistName) VALUES(?, ?, ?, ?)",
-    [reqBody.title, reqBody.duration, reqBody.trackNo, reqBody.artistName],
-    (err, result) => {
+    "INSERT INTO tracks(title, releaseDate, duration, trackNo, artistName) VALUES(?, ?, ?, ?, ?)",
+    [
+      reqBody.title,
+      reqBody.releaseDate,
+      reqBody.duration,
+      reqBody.trackNo,
+      reqBody.artistName,
+    ],
+    async (err, result) => {
       // print error or respond with result.
-      errorResult(err, result, response);
+      if (err) {
+        errorResult(err, result, response);
+      } else {
+        const trackId = result.insertId;
+
+        connection.query(
+          "SELECT trackId FROM tracks WHERE name = ?",
+          [reqBody.artistName],
+          (err, trackResult) => {
+            if (err) {
+              errorResult(err, result, response);
+            } else if (trackResult.length === 0) {
+              console.log(trackResult);
+              console.log("Could not find track");
+            } else {
+              const albumId = trackResult[0].artistId;
+
+              connection.query(
+                "INSERT INTO albums_tracks(albumId, trackId) VALUES(?, ?)",
+                [albumId, trackId],
+                (err, result) => {
+                  errorResult(err, result, response);
+                }
+              );
+            }
+          }
+        );
+      }
     }
   );
 });
@@ -216,18 +249,6 @@ app.put("/tracks/:id", async (request, response) => {
   connection.query(
     "UPDATE tracks SET title = ?, duration = ?, releaseDate = ? WHERE artistId = ?",
     [reqBody.title, reqBody.duration, reqBody.releaseDate, reqArtistId],
-    (err, result) => {
-      // print error or respond with result.
-      errorResult(err, result, response);
-    }
-  );
-});
-app.post("/tracks/:trackId/addArtist/:artistId", async (request, response) => {
-  const trackId = request.params.trackId;
-  const artistId = request.params.artistId;
-  connection.query(
-    "INSERT INTO track_artists(trackId, artistId) VALUES (?, ?)",
-    [trackId, artistId],
     (err, result) => {
       // print error or respond with result.
       errorResult(err, result, response);
