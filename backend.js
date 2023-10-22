@@ -199,8 +199,14 @@ app.delete("/tracks/:id", async (request, response) => {
 app.post("/tracks", async (request, response) => {
   const reqBody = request.body;
   connection.query(
-    "INSERT INTO tracks(title, duration, trackNo, artistName) VALUES(?, ?, ?, ?, ?)",
-    [reqBody.title, reqBody.duration, reqBody.trackNo, reqBody.artistName],
+    "INSERT INTO tracks(title, duration, trackNo, artistName, albumName) VALUES(?, ?, ?, ?, ?)",
+    [
+      reqBody.title,
+      reqBody.duration,
+      reqBody.trackNo,
+      reqBody.artistName,
+      reqBody.albumName,
+    ],
     async (err, result) => {
       // print error or respond with result.
       if (err) {
@@ -209,19 +215,19 @@ app.post("/tracks", async (request, response) => {
         const trackId = result.insertId;
 
         connection.query(
-          "SELECT trackId FROM tracks WHERE name = ?",
-          [reqBody.artistName],
-          (err, trackResult) => {
+          "SELECT albumId FROM albums WHERE title = ?",
+          [reqBody.albumId],
+          (err, albumResult) => {
             if (err) {
               errorResult(err, result, response);
-            } else if (trackResult.length === 0) {
-              console.log(trackResult);
-              console.log("Could not find track");
+            } else if (albumResult.length === 0) {
+              console.log(albumResult);
+              console.log("Could not find Album");
             } else {
-              const albumId = trackResult[0].artistId;
+              const albumId = albumResult[0].albumId;
 
               connection.query(
-                "INSERT INTO albums_tracks(albumId, trackId) VALUES(?, ?)",
+                "INSERT INTO albums_tracks(albumId, trackid) VALUES(?, ?)",
                 [albumId, trackId],
                 (err, result) => {
                   errorResult(err, result, response);
@@ -231,18 +237,6 @@ app.post("/tracks", async (request, response) => {
           }
         );
       }
-    }
-  );
-});
-app.put("/tracks/:id", async (request, response) => {
-  const reqArtistId = request.params.id;
-  const reqBody = request.body;
-  connection.query(
-    "UPDATE tracks SET title = ?, duration = ?, releaseDate = ? WHERE artistId = ?",
-    [reqBody.title, reqBody.duration, reqBody.releaseDate, reqArtistId],
-    (err, result) => {
-      // print error or respond with result.
-      errorResult(err, result, response);
     }
   );
 });
