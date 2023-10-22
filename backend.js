@@ -106,6 +106,19 @@ app.post("/artists/:artistId/addAlbum/:albumId", async (request, response) => {
 });
 /* ---------- Routes for Albums ---------- */
 
+app.get("/albums/random", async (request, response) => {
+  connection.query(
+    "SELECT * FROM albums ORDER BY RAND() LIMIT 1",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        response.json(result[0]);
+      }
+    }
+  );
+});
+
 app.get("/albums", async (request, response) => {
   connection.query("SELECT * FROM albums ORDER BY title;", (err, result) => {
     // print error or respond with result.
@@ -181,6 +194,19 @@ app.get("/albums/export/:id", async (request, response) => {
 });
 
 /* ---------- Routes for Tracks ---------- */
+
+app.get("/tracks/random", async (request, response) => {
+  connection.query(
+    "SELECT * FROM tracks ORDER BY RAND() LIMIT 1",
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        response.json(result[0]);
+      }
+    }
+  );
+});
 
 app.get("/tracks", async (request, response) => {
   connection.query("SELECT * FROM tracks ORDER BY title;", (err, result) => {
