@@ -92,7 +92,18 @@ app.get("/artists/random", async (request, response) => {
     }
   );
 });
-
+app.post("/artists/:artistId/addAlbum/:albumId", async (request, response) => {
+  const artistId = request.params.artistId;
+  const albumId = request.params.albumId;
+  connection.query(
+    "INSERT INTO artists_albums (artistId, albumId) VALUES (?, ?)",
+    [artistId, albumId],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
+});
 /* ---------- Routes for Albums ---------- */
 
 app.get("/albums", async (request, response) => {
@@ -132,6 +143,17 @@ app.put("/albums/:id", async (request, response) => {
     }
   );
 });
+app.post("/albums/:albumId/addTrack/:trackId", async (request, response) => {
+  const albumId = request.params.albumId;
+  const trackId = request.params.trackId;
+  connection.query(
+    "INSERT INTO albums_tracks (albumId, trackId) VALUES (?, ?)",
+    [albumId, trackId],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
 
 /* ---------- Routes for Tracks ---------- */
 
@@ -172,6 +194,18 @@ app.put("/tracks/:id", async (request, response) => {
     }
   );
 });
+app.post("/tracks/:trackId/addArtist/:artistId", async (request, response) => {
+  const trackId = request.params.trackId;
+  const artistId = request.params.artistId;
+  connection.query(
+    "INSERT INTO track_artists(trackId, artistId) VALUES (?, ?)",
+    [trackId, artistId],
+    (err, result) => {
+      // print error or respond with result.
+      errorResult(err, result, response);
+    }
+  );
+});
 
 /* ---------- Search ---------- */
 
@@ -180,7 +214,6 @@ app.get("/:table/search/:column/:searchValue", async (request, response) => {
   const column = request.params.column;
   const searchValue = `%${request.params.searchValue}%`;
   const query = `SELECT * FROM ${table} WHERE ${column} LIKE ?`;
-
   connection.query(query, [searchValue], (err, result) => {
     // print error or respond with result.
     errorResult(err, result, response);
