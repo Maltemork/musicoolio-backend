@@ -216,7 +216,7 @@ app.post("/tracks", async (request, response) => {
 
         connection.query(
           "SELECT albumId FROM albums WHERE title = ?",
-          [reqBody.albumId],
+          [reqBody.albumName],
           (err, albumResult) => {
             if (err) {
               errorResult(err, result, response);
