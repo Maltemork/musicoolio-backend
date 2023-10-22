@@ -122,17 +122,10 @@ app.delete("/albums/:id", async (request, response) => {
 });
 app.post("/albums", async (request, response) => {
   const reqBody = request.body;
-  const artistName = reqBody.artistName;
   connection.query(
-    "INSERT INTO albums(title, releaseDate, type, albumArt, artistName) VALUES(?, ?, ?, ?, ?)",
-    [
-      reqBody.title,
-      reqBody.releaseDate,
-      reqBody.type,
-      reqBody.albumArt,
-      reqBody.artistName,
-    ],
-    (err, result) => {
+    "INSERT INTO albums(title, releaseDate, albumArt, artistName) VALUES(?, ?, ?, ?)",
+    [reqBody.title, reqBody.releaseDate, reqBody.albumArt, reqBody.artistName],
+    async (err, result) => {
       // print error or respond with result.
       if (err) {
         errorResult(err, result, response);
