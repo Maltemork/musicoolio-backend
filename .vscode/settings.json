@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "undefined/subscriptions/240c2f0e-640c-4f35-936b-f5d7c26c7b51/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/musicoolioBackendApp",
-    "appService.deploySubpath": "."
-}

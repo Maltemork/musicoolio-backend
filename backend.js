@@ -19,7 +19,7 @@ app.listen(process.env.PORT);
 
 console.log("Hej! Det kører");
 
-app.get("/", (req, res) => res.json({ message: "It works!" }));
+app.get("/", (req, res) => res.json({ message: "Connection made!" }));
 
 // Default function for printing error or returning results.
 function errorResult(err, result, response) {
