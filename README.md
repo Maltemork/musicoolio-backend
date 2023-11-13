@@ -4,7 +4,7 @@ backend til Musicoolio
 
 Sådan kører du backenden lokalt:
 
-    1. Åben projectet i VS Code.
+    1. Åben projektet i VS Code.
 
     2. Klik på View > Terminal.
 
@@ -22,3 +22,5 @@ Sådan kører du backenden lokalt:
 Frontend repository: https://github.com/Maltemork/Musicbase-Frontend
 Frontend deploy: https://maltemork.github.io/Musicbase-Frontend/
 Backend deploy: https://musicooliowebapp.azurewebsites.net/
+
+© Studiegruppe nr. 1: Malte Mørkeberg Sørensen, Malte Bjørklund, Andrew Shereef
