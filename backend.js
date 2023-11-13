@@ -6,7 +6,7 @@
 //
 
 // Import Express, FS and CORS.
-import express, { query } from "express";
+import express from "express";
 import cors from "cors";
 import connection from "./database.js";
 
