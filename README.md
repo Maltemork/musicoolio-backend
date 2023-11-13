@@ -17,8 +17,9 @@ Sådan kører du backenden lokalt:
     4. Skriv følgende i terminalen for at køre backend appen:
         node backend.js
 
-Der er undladt .env fil i backend projektet, da det er dårlig for sikkerheden af databasen. For at køre backend projektet korrekt lokalt, skal der laves en .env fil med de korrekte oplysninger i.
+Der er undladt .env fil i backend projektet, da det er dårlig for sikkerheden af databasen. For at køre backend projektet lokalt, skal der laves en .env fil med de korrekte oplysninger i.
 Hvis det er nødvendigt, kan der skrives til maso0001@stud.kea.dk for at få tilsendt denne .env fil.
+Azure er dog deployet og virker korrekt - og det er klonet fra dette repository.
 
 # Links:
 
